@@ -22,11 +22,27 @@ def open_file(window, text_edit):
     current_file = filepath
     window.title(f"Open File: {filepath}")
 
+
+def get_default_filename(text_edit):
+    """Extract first 30 chars from the first line to use as default filename."""
+    first_line = text_edit.get("1.0", "1.end").strip()  # Get only line 1
+
+    if not first_line:
+        return "untitled"
+
+    # Sanitize: remove characters that are invalid in filenames
+    invalid_chars = r'\/:*?"<>|'
+    sanitized = "".join(c for c in first_line if c not in invalid_chars)
+
+    return sanitized[:30].strip() or "untitled"
+
 # Save file as
 def save_as(window, text_edit):
     global current_file
+    default_name = get_default_filename(text_edit)
 
     filepath = asksaveasfilename(
+        initialfile=default_name,
         defaultextension=".txt",
         filetypes=[("Text Files", "*.txt"), ("JSON Files", "*.json")]
     )
