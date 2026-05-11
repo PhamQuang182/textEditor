@@ -33,7 +33,10 @@ def bind_keys(window, text_edit, callbacks):
         text_edit: The main Text widget.
         callbacks: Dict of action name -> callable.
     """
-    window.bind_all("<Control-z>", lambda e: callbacks["undo"]())
-    window.bind_all("<Control-y>", lambda e: callbacks["redo"]())
-    window.bind_all("<Control-Shift-Z>", lambda e: callbacks["redo"]())
+    # Due to tkinter already using Ctrl+Z/Y for undo/redo, we won't bind those here to avoid conflicts.
+    # window.bind_all("<Control-z>", lambda e: callbacks["undo"]())
+    # window.bind_all("<Control-y>", lambda e: callbacks["redo"]())
+    # window.bind_all("<Control-Shift-Z>", lambda e: callbacks["redo"]())
     window.bind_all("<Control-f>", lambda e: callbacks["find_replace"]())
+    window.bind_all("<Control-s>", lambda e: callbacks["save"]())
+    window.bind_all("<Control-Shift-s>", lambda e: callbacks["save_as"]())
