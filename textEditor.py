@@ -10,16 +10,20 @@ from ui.toolbar import build_toolbar, bind_keys
 def main():
     window = tk.Tk()
     window.title("Text Editor")
-    window.rowconfigure(0, minsize=400)
-    window.columnconfigure(2, minsize=400)
+    window.rowconfigure(1, weight=1)
+    window.columnconfigure(1, weight=1)
+
+    # Toolbar
+    frame = tk.Frame(window, relief=tk.RAISED, bd=2)
+    frame.grid(row=0, column=0, columnspan=3, sticky="ew")
 
     # Text widget
     text_edit = tk.Text(window, font="Courier 12", undo=True, autoseparators=True, maxundo=-1)
-    text_edit.grid(row=0, column=2, sticky="nsew")
+    text_edit.grid(row=1, column=1, sticky="nsew")
 
     # Line number gutter
     line_numbers = LineNumbers(window, text_edit, bg='lightgray')
-    line_numbers.grid(row=0, column=1, sticky='ns')
+    line_numbers.grid(row=1, column=0, sticky='nsew')
 
     # Scrollbar
     scrollbar = tk.Scrollbar(window, command=text_edit.yview)
@@ -27,11 +31,7 @@ def main():
         scrollbar.set(*args)
         line_numbers._update_line_numbers()
     text_edit.config(yscrollcommand=_yscroll)
-    scrollbar.grid(row=0, column=3, sticky='ns')
-
-    # Toolbar
-    frame = tk.Frame(window, relief=tk.RAISED, bd=2)
-    frame.grid(row=0, column=0, sticky="ns")
+    scrollbar.grid(row=1, column=2, sticky='ns')
 
     callbacks = {
         "save":         lambda: save_file(window, text_edit),

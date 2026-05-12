@@ -1,6 +1,5 @@
 import tkinter as tk
 
-
 def build_toolbar(window, frame, text_edit, callbacks):
     """
     Build and grid all toolbar buttons.
@@ -18,9 +17,9 @@ def build_toolbar(window, frame, text_edit, callbacks):
         ("Find/Replace", callbacks["find_replace"]),
     ]
 
-    for row, (label, cmd) in enumerate(buttons):
+    for column, (label, cmd) in enumerate(buttons):
         tk.Button(frame, text=label, command=cmd).grid(
-            row=row, column=0, padx=5, pady=5, sticky="ew"
+            column=column, row=0, padx=0, pady=0, sticky="ew"
         )
 
 
