@@ -3,9 +3,10 @@ import tkinter as tk
 from core.file_ops import open_file, save_file, save_as
 from core.edit_ops import safe_edit_undo, safe_edit_redo
 from core.search import open_find_replace
+from ui import line_numbers
 from ui.line_numbers import LineNumbers
 from ui.toolbar import build_toolbar, bind_keys
-
+from ui.zoom import setup_zoom
 
 def main():
     window = tk.Tk()
@@ -32,6 +33,8 @@ def main():
         line_numbers._update_line_numbers()
     text_edit.config(yscrollcommand=_yscroll)
     scrollbar.grid(row=1, column=2, sticky='ns')
+
+    setup_zoom(text_edit, line_numbers)
 
     callbacks = {
         "save":         lambda: save_file(window, text_edit),
